@@ -1,1 +1,38 @@
-
+    "builders": [
+        {
+            "type": "yandex",
+            "token": "y0__XXX_NO_BODY_KNOWN_XXX",
+            "folder_id": "b1gXXXXXXXXXXXXXX",
+            "zone": "ru-central1-a",
+            "image_name": "ubuntu-2004-docker",
+            "image_description": "cli ubuntu-2004-lts  with docker",
+            "source_image_family": "ubuntu-2004-lts",
+            "subnet_id": "e9bXXXXXXXXXXXXXXXX",
+            "use_ipv4_nat": true,
+            "disk_type": "network-hdd",
+            "ssh_username": "ubuntu"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                        "echo '=== Docker Installation ==='",
+                        "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-keyring.gpg",
+                        "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-keyring.gpg] https://download.docker.com/linu>
+                        "sudo apt-get update",
+                        "sudo apt-get install -y docker-ce containerd.io",
+                        "sudo usermod -aG docker $USER",
+                        "sudo chmod 666 /var/run/docker.sock",
+                        "sudo useradd -m -s /bin/bash -G docker yc-user",
+                        "echo '=== HTOP and TMUX Installation  ==='",
+                        "sudo apt-get install -y htop tmux",
+                        "echo '=== Checking versions of Docker HTOP and TMUX  ==='",
+                        "docker version",
+                        "htop -v",
+                        "tmux -V",
+                        "echo '=== Task is FINISHED  ==='"
+                      ]
+        }
+    ]
+}
